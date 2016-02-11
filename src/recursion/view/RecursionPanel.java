@@ -1,10 +1,11 @@
 package recursion.view;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import java.awt.*;
-
-import recursion.controller.*;
+import recursion.controller.RecursionController;
 
 public class RecursionPanel extends JPanel
 {
@@ -12,7 +13,7 @@ public class RecursionPanel extends JPanel
 	private JButton fibonacciButton;
 	private JButton factorialButton;
 	private JTextField inputField;
-	private JTextArea displayArea;
+	private JTextArea resultsArea;
 	private SpringLayout baseLayout;
 	
 	public RecursionPanel(RecursionController baseController)
@@ -20,9 +21,9 @@ public class RecursionPanel extends JPanel
 		this.baseController = baseController;
 		
 		baseLayout = new SpringLayout();
-		displayArea = new JTextArea(10,20);
-		fibonacciButton = new JButton("FIB");
-		factorialButton = new JButton("");
+		resultsArea = new JTextArea(10,30);
+		fibonacciButton = new JButton("Get the Fibonacci sequence for this number");
+		factorialButton = new JButton("Get n!");
 		inputField = new JTextField(20);
 	
 		
@@ -38,27 +39,72 @@ public class RecursionPanel extends JPanel
 	{
 		this.setLayout(baseLayout);
 		this.setBackground(Color.GRAY);
-		this.add(displayArea);
+		this.add(resultsArea);
 		this.add(fibonacciButton);
 		this.add(factorialButton);
 		this.add(inputField);
-		displayArea.setEnabled(false);
+		resultsArea.setEnabled(false);
+		resultsArea.setWrapStyleWord(true);
+		resultsArea.setLineWrap(true); 
+		resultsArea.setText(baseController.getCalculatedValue());
 	}
 	
 	private void setupLayout()
 	{
-		baseLayout.putConstraint(SpringLayout.NORTH, displayArea, 34, SpringLayout.NORTH, this);
-		baseLayout.putConstraint(SpringLayout.EAST, displayArea, -120, SpringLayout.EAST, this);
-		baseLayout.putConstraint(SpringLayout.WEST, fibonacciButton, 42, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, factorialButton, 238, SpringLayout.NORTH, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, fibonacciButton, 0, SpringLayout.NORTH, factorialButton);
-		baseLayout.putConstraint(SpringLayout.EAST, factorialButton, -63, SpringLayout.EAST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, inputField, -68, SpringLayout.SOUTH, this);
-		baseLayout.putConstraint(SpringLayout.WEST, inputField, 0, SpringLayout.WEST, displayArea);
+		baseLayout.putConstraint(SpringLayout.NORTH, resultsArea, 33, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.WEST, resultsArea, 88, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.EAST, resultsArea, -124, SpringLayout.EAST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, fibonacciButton, 385, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.SOUTH, resultsArea, -192, SpringLayout.NORTH, fibonacciButton);
+		baseLayout.putConstraint(SpringLayout.WEST, fibonacciButton, 214, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.WEST, factorialButton, 317, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, factorialButton, 32, SpringLayout.SOUTH, inputField);
+		baseLayout.putConstraint(SpringLayout.NORTH, inputField, 252, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.WEST, inputField, 234, SpringLayout.WEST, this);
 	}
 	
 	private void setupListeners()
 	{
+		fibonacciButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String userInput = inputField.getText();
+				if(checkInput(userInput))
+				{
+					resultsArea.setText(baseController.doFibonacci(userInput));
+				}
+			}
 		
+		});
+		
+		factorialButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String userInput = inputField.getText();
+				if(checkInput(userInput))
+				{
+					resultsArea.setText(baseController.doFactorial(userInput));
+				}
+			}
+		});
+	}
+	
+	private boolean checkInput(String input)
+	{
+		boolean isNumber = false;
+		
+		try
+		{
+			Integer.parseInt(input);
+			isNumber = true;
+		}
+		catch(Exception numberException)
+		{
+			resultsArea.setText("NUMBERS ONLY!");
+		}
+		
+		return isNumber;
 	}
 }
