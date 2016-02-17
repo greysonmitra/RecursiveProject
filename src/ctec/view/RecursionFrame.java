@@ -1,7 +1,8 @@
-package recursion.view;
+package ctec.view;
 
-import recursion.controller.RecursionController;
 import javax.swing.*;
+
+import ctec.controller.RecursionController;
 
 public class RecursionFrame extends JFrame
 {

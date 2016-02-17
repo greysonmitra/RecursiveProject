@@ -1,18 +1,21 @@
-package recursion.controller;
+package ctec.controller;
 
-import recursion.model.RecursionTool;
-import recursion.view.RecursionFrame;
+import ctec.model.*;
+import ctec.view.RecursionFrame;
 
 public class RecursionController
 {
 	private RecursionFrame baseFrame;
 	private RecursionTool mathTool;
 	private String calculatedValue;
-
+	private CodeTimer myTimer;
+	
+	
 	public RecursionController()
 	{
 		mathTool = new RecursionTool();
 		baseFrame = new RecursionFrame(this);
+		myTimer = new CodeTimer();
 	}
 	
 	public void start()
@@ -37,6 +40,11 @@ public class RecursionController
 		calculatedValue = "The factorial of " + inputValue + " is " + Double.toString(mathTool.getFactorialNumber(Integer.parseInt(inputValue)));
 		
 		return calculatedValue;
+	}
+	
+	public String timingInfo()
+	{
+		return myTimer.toString();
 	}
 	
 //	public MyTwoDController()

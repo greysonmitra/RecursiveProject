@@ -1,4 +1,4 @@
-package recursion.model;
+package ctec.model;
 
 public class RecursionTool
 {
@@ -26,6 +26,31 @@ public class RecursionTool
 		}
 	}
 	
+	public int getIterativeFibNumber(int position)
+	{
+		if(position < 0)
+		{
+			return Integer.MIN_VALUE;
+		}
+		
+		if(position == 0 || position == 1) 
+		{
+			return 1;
+		}
+		else
+		{
+			int fibNum = 1;
+			int fibNum2 = 1;
+			for(int i = 0; i <= position; i++)
+			{
+				int fibNum2New = fibNum;
+				fibNum = fibNum2 + fibNum;
+				fibNum2 = fibNum2New;
+			}
+		return fibNum;
+		}
+	}
+	
 	public double getFactorialNumber(double position)
 	{
 		if(position < 0)
@@ -42,5 +67,30 @@ public class RecursionTool
 		{
 			return position * getFactorialNumber(position - 1);
 		}
+	}
+	
+	public double getIterativeFactorialNumber(double position)
+	{
+		if(position < 0)
+		{
+			return Integer.MIN_VALUE;
+		}
+		
+		
+		if(position == 0) 
+		{
+			return 1;
+		}
+		else 
+		{
+			double result = 1;
+			while(position > 1)
+			{
+				result = result * position;
+				position = position - 1;
+			}
+		}
+		
+		return result;
 	}
 }

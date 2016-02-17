@@ -1,11 +1,12 @@
-package recursion.view;
+package ctec.view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-import recursion.controller.RecursionController;
+import ctec.controller.RecursionController;
 
 public class RecursionPanel extends JPanel
 {
@@ -15,6 +16,7 @@ public class RecursionPanel extends JPanel
 	private JTextField inputField;
 	private JTextArea resultsArea;
 	private SpringLayout baseLayout;
+	private JLabel timingLabel;
 	
 	public RecursionPanel(RecursionController baseController)
 	{
@@ -25,6 +27,8 @@ public class RecursionPanel extends JPanel
 		fibonacciButton = new JButton("Get the Fibonacci sequence for this number");
 		factorialButton = new JButton("Get n!");
 		inputField = new JTextField(20);
+		timingLabel = new JLabel("Timer");
+		
 	
 		
 		
@@ -43,6 +47,7 @@ public class RecursionPanel extends JPanel
 		this.add(fibonacciButton);
 		this.add(factorialButton);
 		this.add(inputField);
+		this.add(timingLabel);
 		resultsArea.setEnabled(false);
 		resultsArea.setWrapStyleWord(true);
 		resultsArea.setLineWrap(true); 
@@ -61,6 +66,8 @@ public class RecursionPanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.NORTH, factorialButton, 32, SpringLayout.SOUTH, inputField);
 		baseLayout.putConstraint(SpringLayout.NORTH, inputField, 252, SpringLayout.NORTH, this);
 		baseLayout.putConstraint(SpringLayout.WEST, inputField, 234, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, timingLabel, 19, SpringLayout.SOUTH, resultsArea);
+		baseLayout.putConstraint(SpringLayout.EAST, timingLabel, 0, SpringLayout.EAST, resultsArea);
 	}
 	
 	private void setupListeners()
@@ -74,6 +81,7 @@ public class RecursionPanel extends JPanel
 				{
 					resultsArea.setText(baseController.doFibonacci(userInput));
 				}
+				timingLabel.setText(baseController.timingInfo());
 			}
 		
 		});
@@ -87,6 +95,7 @@ public class RecursionPanel extends JPanel
 				{
 					resultsArea.setText(baseController.doFactorial(userInput));
 				}
+				timingLabel.setText(baseController.timingInfo());
 			}
 		});
 	}
